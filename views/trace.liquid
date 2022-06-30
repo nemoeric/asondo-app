@@ -130,7 +130,8 @@
           const mapProp= {
             center: ivoryCoast,
             zoom: 7,
-            styles : stylesArray
+            styles : stylesArray,
+            mapTypeId: 'satellite'
           };
 
           
@@ -138,7 +139,6 @@
 
           var mapElements = document.querySelectorAll('[data-map]')
           mapElements.forEach(function(element, index){
-            console.log(element.id);
             let map = new google.maps.Map( document.getElementById(element.id), mapProp);
             // MARKERS
             var markers = [ivoryCoast]
