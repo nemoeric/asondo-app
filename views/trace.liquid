@@ -21,17 +21,17 @@
     </div>
     <div class="grid grid-cols-1 gap-4">
       {% for lot in lots %}
-        <div class="card">
+        <div class="card bg-orangeLight">
           <h2 class="text-2xl">
             Lot {{ lot.fields["Numéro de lots"] }}
           </h2>
           {% for achatBrousse in lot.fields["Achats brousse"] %}
-            <div class="border-2 p-1 my-2">
+            <div class="border-2 p-1 my-2 bg-white">
               {% for camion in camions %}
                 {% if camion.id == achatBrousse %}
-                  <div class="grid grid-cols-2 gap-2">
+                  <div class="grid md:grid-cols-2 gap-2">
                     <div data-camion class="p-2">
-                      <div class="text-bold">
+                      <div class="font-bold text-xl">
                         Camion n°: {{camion.fields["Numéro de camion"]}}
                       </div>
                       <div>

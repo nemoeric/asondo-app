@@ -34,7 +34,9 @@
                 clifford: '#da373d',
                 green: "#046355",
                 greenLight: "#04635533",
-                red: "#ff0000"
+                red: "#ff0000",
+                orange: "#f1742e",
+                orangeLight: "#f1742e24"
               }
             }
           }
@@ -43,7 +45,10 @@
       <style type="text/tailwindcss">
         @layer utilities {
           .card {
-            @apply p-3 my-2 border-2 border-greenLight
+            @apply p-4 my-2 border-2 border-greenLight rounded-md	
+          }
+          .container{
+            @apply p-2
           }
         }
       </style>
@@ -56,7 +61,9 @@
       </a>
     </header>
 
-    {% block body %}My body{% endblock %}
+    <div class="px-2">
+      {% block body %}My body{% endblock %}
+    </div>
 
     <footer class="bg-green p-10 text-center">
       <div class="text-white">
