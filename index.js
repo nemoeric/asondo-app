@@ -1,6 +1,7 @@
-const express = require('express');
-const app = express();
-const port = process.env.PORT || 3000;
+const express 	= require('express');
+const app 			= express();
+const port			= process.env.PORT || 3000;
+var path 				= require('path');
 
 var bodyParser = require('body-parser')
 app.use( bodyParser.json() );       // to support JSON-encoded bodies
@@ -17,6 +18,7 @@ app.engine('liquid', engine.express());
 app.set('views', './views');            // specify the views directory
 app.set('view engine', 'liquid');       // set liquid to default
 
+app.use("/public", express.static(path.join(__dirname, 'public')));
 
 const baseName = {
 	executionLogistique : "appehK2uJ3sp8MXwK"

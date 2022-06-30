@@ -144,8 +144,15 @@
             var markers = [ivoryCoast]
             var infowindow = new google.maps.InfoWindow();
             for (i = 0; i < markers.length; i++) {  
+              const icon = {
+                  url: "/public/marker.png",// url
+                  scaledSize: new google.maps.Size(50, 50), // scaled size
+                  origin: new google.maps.Point(0,0), // origin
+                  anchor: new google.maps.Point(0, 0) // anchor
+              };
               let marker = new google.maps.Marker({
                 position: markers[i],
+                icon,
                 map
               });
               google.maps.event.addListener(marker, 'click', (function(marker, i) {
