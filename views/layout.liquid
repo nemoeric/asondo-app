@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tracabilité ASONDO</title>
+    <link rel="icon" href="https://asondo.ci/wp-content/uploads/2021/08/cropped-LOGO-ICON-32x32.png" sizes="32x32" />
+    <link rel="icon" href="https://asondo.ci/wp-content/uploads/2021/08/cropped-LOGO-ICON-192x192.png" sizes="192x192" />
+    <link rel="apple-touch-icon" href="https://asondo.ci/wp-content/uploads/2021/08/cropped-LOGO-ICON-180x180.png" />
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Jost&family=Nixie+One&family=Roboto+Slab&display=swap" rel="stylesheet">
+    
+    <style>
+    *{
+      font-family: 'Jost', sans-serif;
+
+    }
+    h1, h2, h3, h4 {
+      font-family: 'Roboto Slab', serif;
+    }
+    </style>
+      <script src="https://cdn.tailwindcss.com"></script>
+      <script>
+        tailwind.config = {
+          theme: {
+            container: {
+              center: true,
+            },
+            extend: {
+              colors: {
+                clifford: '#da373d',
+                green: "#046355",
+                greenLight: "#04635533",
+                red: "#ff0000"
+              }
+            }
+          }
+        }
+      </script>
+      <style type="text/tailwindcss">
+        @layer utilities {
+          .card {
+            @apply p-3 my-2 border-2 border-greenLight
+          }
+        }
+      </style>
+  </head>
+  <body class="pt-[100px]">
+    <header class="fixed p-4 top-0 left-O w-full z-10 flex bg-green items-center">
+      <a href="/" class="flex aligns-center items-center">
+        <img class="h-[40px] mr-4" src="https://asondo.ci/wp-content/themes/asondo-theme/public/images/logo.png" alt="Asondo">
+        <img class="h-[20px]" src="https://asondo.ci/wp-content/uploads/2021/08/LOGO-TEXT-1.png" alt="">
+      </a>
+    </header>
+
+    {% block body %}My body{% endblock %}
+
+    <footer class="bg-green p-10 text-center">
+      <div class="text-white">
+        Développé par <a href="https://kercambre.com">kercambre agency</a>
+      </div>
+    </footer>
+  </body>
+</html>

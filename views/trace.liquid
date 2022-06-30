@@ -1,0 +1,169 @@
+{% layout "layout.liquid" %}
+{% block body %}
+  <div class="sm:container">
+    <div class="card text-center">
+      <div>Facture</div>
+      <h1 class="text-2xl">{{ facture.fields.Numero}} </h1>
+      <div>
+        Vous avez acheté {{ facture.fields["Quantité facturée"] }} tonnes
+      </div>
+      <div>
+        Facturé le {{ facture.fields["Date"] }}
+      </div>
+
+    </div>
+
+    <div class="my-4 mt-10">
+      <h2 class="text-xl">Provenance</h2>
+      <div>
+        Tracabilités des lots présents sur votre facture.
+      </div>
+    </div>
+    <div class="grid grid-cols-1 gap-4">
+      {% for lot in lots %}
+        <div class="card">
+          <h2 class="text-2xl">
+            Lot {{ lot.fields["Numéro de lots"] }}
+          </h2>
+          {% for achatBrousse in lot.fields["Achats brousse"] %}
+            <div class="border-2 p-1 my-2">
+              {% for camion in camions %}
+                {% if camion.id == achatBrousse %}
+                  <div class="grid grid-cols-2 gap-2">
+                    <div data-camion class="p-2">
+                      <div class="text-bold">
+                        Camion n°: {{camion.fields["Numéro de camion"]}}
+                      </div>
+                      <div>
+                        Code fournisseur : {{ camion.fields["Code fourniseur"] }}
+                      </div>
+                      <div>
+                        Sigle fournisseur : {{ camion.fields["Sigle"] }}
+                      </div>
+                      <div>
+                        Sous prefecture : {{ camion.fields["Sous préfecture"] }}
+                      </div>
+                      <div>
+                        Trajet : {{ camion.fields["Trajet"] }}
+                      </div>
+                    </div>
+                    <div>
+                      <div data-map id="lot{{lot.id}}-map{{forloop.index}}" style="height:400px">
+                        maps
+                      </div>
+                    </div>
+
+                  </div>
+                {% endif %}
+              {% endfor %}
+            </div>
+          {% endfor %}
+        </div>
+      {% endfor %}
+    </div>
+    <ul>
+
+    </ul>
+    <div class="my-6">
+
+      <script>
+
+        function myMap() {
+          const ivoryCoast = { lat: 7.539989, lng: -5.547080 };
+          const stylesArray = [
+            {
+                "featureType": "all",
+                "elementType": "labels.text",
+                "stylers": [
+                    {
+                        "color": "#878787"
+                    }
+                ]
+            },
+            {
+                "featureType": "all",
+                "elementType": "labels.text.stroke",
+                "stylers": [
+                    {
+                        "visibility": "off"
+                    }
+                ]
+            },
+            {
+                "featureType": "landscape",
+                "elementType": "all",
+                "stylers": [
+                    {
+                        "color": "#f9f5ed"
+                    }
+                ]
+            },
+            {
+                "featureType": "road.highway",
+                "elementType": "all",
+                "stylers": [
+                    {
+                        "color": "#f5f5f5"
+                    }
+                ]
+            },
+            {
+                "featureType": "road.highway",
+                "elementType": "geometry.stroke",
+                "stylers": [
+                    {
+                        "color": "#c9c9c9"
+                    }
+                ]
+            },
+            {
+                "featureType": "water",
+                "elementType": "all",
+                "stylers": [
+                    {
+                        "color": "#aee0f4"
+                    }
+                ]
+            }
+        ]
+          
+          const mapProp= {
+            center: ivoryCoast,
+            zoom: 7,
+            styles : stylesArray
+          };
+
+          
+          // var map = new google.maps.Map(document.getElementById("googleMap"), mapProp);
+
+          var mapElements = document.querySelectorAll('[data-map]')
+          mapElements.forEach(function(element, index){
+            console.log(element.id);
+            let map = new google.maps.Map( document.getElementById(element.id), mapProp);
+            // MARKERS
+            var markers = [ivoryCoast]
+            var infowindow = new google.maps.InfoWindow();
+            for (i = 0; i < markers.length; i++) {  
+              let marker = new google.maps.Marker({
+                position: markers[i],
+                map
+              });
+              google.maps.event.addListener(marker, 'click', (function(marker, i) {
+                return function() {
+                  infowindow.setContent("COUCOU");
+                  infowindow.open(map, marker);
+                }
+              })(marker, i));
+            }
+          })
+          console.log("mapElements", mapElements);
+
+        }
+
+        
+      </script>
+      <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAUM_6UzxXsIGGSQh1MzU4aqKqVvxiX3_4&callback=myMap"></script>
+
+    </div>
+  </div>
+{% endblock %}

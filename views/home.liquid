@@ -1,0 +1,34 @@
+{% layout "layout.liquid" %}
+{% block body %}
+  <div class="w-[500px] mx-auto">
+
+    <div class="min-h-[500px] my-[100px]">
+      <div class="">
+        TRACABILITÉ DE VOTRE COMMANDE ASONDO
+      </div>
+      <div class="card">
+        <form class="" method="POST" action="/trace">
+          {% if error %}
+          <div class="mb-6 text-red">
+            Le numéro de facture entré n'existe pas
+          </div>
+          {% endif %}
+          <div class="mb-6">
+            <label for="number" class="block mb-2 font-medium">Numéro de facture</label>
+            <input 
+                type="text" 
+                id="number"
+                name="number"
+                value="ASD-EXP-2122-"
+                class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5" 
+                placeholder="ASD-EXP-XXXX-XXX" 
+                required>
+          </div>
+          <button type="submit" class="text-white bg-green hover:bg-greenLight focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center">VALIDER</button>
+        </form>
+
+      </div>
+    </div>
+
+  </div>
+{% endblock %}
