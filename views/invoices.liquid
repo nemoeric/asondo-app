@@ -1,0 +1,26 @@
+{% layout "layout.liquid" %}
+{% block body %}
+  <div class="md:w-[500px] mx-auto py-[200px]">
+    <div class="text-2xl">
+      FACTURES
+    </div> 
+    <div>
+      Accéder aux détails de chacune de vos factures
+    </div>
+    <div class="grid grid-cols-2 gap-2 my-10">
+      {% for invoice in invoices %}
+        <a href="/trace?id={{ invoice.id }}">
+          <div class="border p-2 hover:bg-gray-50 hover:cursor-pointer">
+            <div class="text-lg">
+              {{ invoice.fields.Numero }}
+            </div>
+            <div class="flex justify-end">
+              <i class="fa-solid fa-angles-right"></i>
+            </div> 
+          </div>
+        </a>
+       
+      {% endfor %}
+    </div>
+  </div>
+{% endblock %}

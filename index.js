@@ -24,6 +24,35 @@ const baseName = {
 	executionLogistique : "appehK2uJ3sp8MXwK"
 }
 
+app.post('/login',
+	async (req, res) => {	
+		const base = airtable.base(baseName.executionLogistique);
+		const clients = await base("Clients").select({
+			filterByFormula: `{Email contact commercial} = '${req.body.email}' `
+		}).all()
+
+		if(!clients.length){
+			return res.render('home', {
+				error: true
+			})
+		}
+
+		const client = clients[0];
+		console.log("client", client);
+		console.log(client.fields["Mot de passe traçabilité"]);
+		console.log(req.body.password);
+
+
+		if(client.fields["Mot de passe traçabilité"] == req.body.password){
+			return res.redirect("/invoices")
+		}
+
+		return res.render('home', {
+			error: true
+		})
+		
+	}
+)
 app.post('/trace', 
 	async (req, res) => {
 		const base = airtable.base(baseName.executionLogistique);
@@ -46,7 +75,6 @@ app.post('/trace',
 		
 	}
 )
-
 app.get('/trace', 
 	async (req, res) => {
 		const {id} = req.query
@@ -90,10 +118,28 @@ app.get('/trace',
 
 	}
 )
+
+
 app.get('/', (req, res) => {
 	return res.render('home', {
 	})
 });
+
+app.get('/invoices', 
+	async (req, res) => {
+		// console.log("ici?");
+		const base 				= airtable.base(baseName.executionLogistique);
+		const client 			= await base('Clients').find("recqoCP18T6qeZ9Sc");
+		const invoices 		= await base("Ventes").select({
+			filterByFormula: ` SEARCH("${client.fields.Name}", ARRAYJOIN(CLIENT)) ` 
+		}).all()
+		// console.log("invoices", invoices.length);
+		return res.render('invoices', {
+			invoices
+		})
+
+	}
+)
 
 app.listen(port, () => {
 	console.log('Server app listening on port ' + port);

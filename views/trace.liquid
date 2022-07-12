@@ -1,6 +1,12 @@
 {% layout "layout.liquid" %}
 {% block body %}
   <div class="sm:container">
+    <div class="hover:text-orange hover:opacity-1/2">
+      <a href="/invoices">
+        <i class="fa-solid fa-arrow-left"></i> Retour aux factures
+      </a>
+    </div>
+
     <div class="card text-center">
       <div>Facture</div>
       <h1 class="text-2xl">{{ facture.fields.Numero}} </h1>
@@ -9,6 +15,17 @@
       </div>
       <div>
         Facturé le {{ facture.fields["Date"] }}
+      </div>
+
+    </div>
+
+    <div class="py-4">
+      <h1 class="text-xl">Informations</h1>
+      <div>
+        Numero de contrat : {{ facture.fields["Numéro de contrat"] }}
+      </div>
+      <div>
+        Bon de livraison :  {{ facture.fields["Numéro du B/L"] }}
       </div>
 
     </div>

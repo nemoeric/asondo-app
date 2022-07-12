@@ -5,28 +5,46 @@
     <div class="min-h-[500px] my-[100px]">
       <div class="text-2xl">
         TRACABILITÉ COMMANDE
-      </div>
+      </div> 
       <div>
       <div>
-        Entrez votre numéro de facture pour retrouver toutes les informations de tracabilité de vos lots.
+        Connectez-vous à votre espace Asondo.<br>
+        Si vous n'avez pas vos identifiants, contactez-nous.
       </div>
       <div class="card">
-        <form class="" method="POST" action="/trace">
+        <form class="" method="POST" action="/login">
           {% if error %}
           <div class="mb-6 text-red">
-            Le numéro de facture entré n'existe pas
+            Identifiants incorrects.
           </div>
           {% endif %}
           <div class="mb-6">
-            <label for="number" class="block mb-2 font-medium">Numéro de facture</label>
-            <input 
-                type="text" 
-                id="number"
-                name="number"
-                value="ASD-EXP-2122-"
-                class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5" 
-                placeholder="ASD-EXP-XXXX-XXX" 
-                required>
+            
+            <div class="my-4">
+              <label for="email" class="block mb-2 font-medium">Email</label>
+              <input 
+                  type="email" 
+                  id="email"
+                  name="email"
+                  value="gervais_kacou@barry-callebaut.com"
+                  class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5" 
+                  placeholder="hey@asondo.ci" 
+                  required>
+
+            </div>
+
+            <div class="my-4">
+              <label for="email" class="block mb-2 font-medium">Mot de passe</label>
+              <input 
+                  type="password" 
+                  id="password"
+                  name="password"
+                  value="BCAS27102021"
+                  class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5" 
+                  placeholder="" 
+                  required>
+
+            </div>
           </div>
           <button type="submit" class="text-white bg-green hover:bg-greenLight focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center">VALIDER</button>
         </form>
