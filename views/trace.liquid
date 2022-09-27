@@ -41,7 +41,7 @@
       {% for lot in lots %}
         <div class="card bg-orangeLight">
           <h2 class="text-2xl">
-            Lot {{ lot.fields["Numéro de lots"] }} - Poids net : {{ lot.fields["Poids net"] | kg }}
+            Lot {{ lot.fields["Numéro de lots"] }} - Poids net : {{ lot.fields["Poids net sortie"] | kg }}
           </h2>
           {% for cetAchatBrousseDetail in lot.fields["Achats brousse détail"] %}
             <div class="border-2 p-1 my-2 bg-white">
