@@ -3,7 +3,7 @@
   <div class="sm:container">
     <div class="hover:text-orange hover:opacity-1/2">
       <a href="/invoices">
-        <i class="fa-solid fa-arrow-left"></i> Retour aux factures
+        <i class="fa-solid fa-arrow-left"></i> Retour aux contrats
       </a>
     </div>
 
@@ -22,7 +22,7 @@
     <div class="py-4">
       <h1 class="text-xl">Informations</h1>
       <div>
-        Numero de contrat : {{ facture.fields["Numéro de contrat"] }}
+        Numero de contrat : {{ facture.fields["DEV_CONTRAT"] }}
       </div>
       <div>
         Bon de livraison :  {{ facture.fields["Numéro du B/L"] }}
@@ -37,40 +37,56 @@
       </div>
     </div>
     <div class="grid grid-cols-1 gap-4">
+
       {% for lot in lots %}
         <div class="card bg-orangeLight">
           <h2 class="text-2xl">
-            Lot {{ lot.fields["Numéro de lots"] }}
+            Lot {{ lot.fields["Numéro de lots"] }} - Poids net : {{ lot.fields["Poids net"] | kg }}
           </h2>
-          {% for achatBrousse in lot.fields["Achats brousse"] %}
+          {% for cetAchatBrousseDetail in lot.fields["Achats brousse détail"] %}
             <div class="border-2 p-1 my-2 bg-white">
-              {% for camion in camions %}
-                {% if camion.id == achatBrousse %}
-                  <div class="grid md:grid-cols-2 gap-2">
-                    <div data-camion class="p-2">
-                      <div class="font-bold text-xl">
-                        Camion n°: {{camion.fields["Numéro de camion"]}}
+              {% for oneAchatBrousseDetail in achatBrousseDetails %}
+                {% if oneAchatBrousseDetail.id == cetAchatBrousseDetail %}
+                  {%- for camion in camions -%}
+                    {%- if oneAchatBrousseDetail.fields["Achats brousse"][0] == camion.id -%}
+                      <div class="grid md:grid-cols-2 gap-2">
+                        <div data-camion class="p-2">
+                          <div class="font-bold text-xl">
+                            Camion n°: {{camion.fields["Numéro de camion"]}}
+                          </div>
+                          <div>
+                            Livré le {{ oneAchatBrousseDetail.fields.DATE }}
+                          </div>
+                          <div class="my-2 border p-1 text-md font-bold text-center">
+                            Quantité : {{ oneAchatBrousseDetail.fields["Quantité affectée au lot"] | kg }}
+                          </div>
+                          <div>
+                            Code fournisseur : {{ camion.fields["Code fourniseur"] }}
+                          </div>
+                          <div>
+                            Sigle fournisseur : {{ camion.fields["Sigle"] }}
+                          </div>
+                          <div>
+                            Sous prefecture : {{ camion.fields["Sous préfecture"] }}
+                          </div>
+                          <div>
+                            Trajet : {{ camion.fields["Trajet"] }}
+                          </div>
+                        </div>
+                        <div>
+                          <div 
+                              data-map id="lot{{lot.id}}-map{{forloop.index}}" 
+                              data-lat="{{ oneAchatBrousseDetail.fields.LATITUDE }}"
+                              data-lng="{{ oneAchatBrousseDetail.fields.LONGITUDE }}"
+                              style="height:400px">
+                            maps
+                          </div>
+                        </div>
+    
                       </div>
-                      <div>
-                        Code fournisseur : {{ camion.fields["Code fourniseur"] }}
-                      </div>
-                      <div>
-                        Sigle fournisseur : {{ camion.fields["Sigle"] }}
-                      </div>
-                      <div>
-                        Sous prefecture : {{ camion.fields["Sous préfecture"] }}
-                      </div>
-                      <div>
-                        Trajet : {{ camion.fields["Trajet"] }}
-                      </div>
-                    </div>
-                    <div>
-                      <div data-map id="lot{{lot.id}}-map{{forloop.index}}" style="height:400px">
-                        maps
-                      </div>
-                    </div>
-
-                  </div>
+                      
+                    {%- endif -%}
+                  {%- endfor -%}
                 {% endif %}
               {% endfor %}
             </div>
@@ -145,19 +161,24 @@
         ]
           const mapProp= {
             center: ivoryCoast,
-            zoom: 7,
+            zoom: 6,
             styles : stylesArray,
             // mapTypeId: 'satellite'
           };
 
-          
-          // var map = new google.maps.Map(document.getElementById("googleMap"), mapProp);
-
           var mapElements = document.querySelectorAll('[data-map]')
           mapElements.forEach(function(element, index){
             let map = new google.maps.Map( document.getElementById(element.id), mapProp);
+            let lat = parseFloat(element.getAttribute('data-lat'))
+            let lng = parseFloat(element.getAttribute('data-lng'))
+
             // MARKERS
-            var markers = [ivoryCoast]
+            var markers = [
+              { lat, lng }
+            ]
+            
+            console.log("markers", markers);
+
             var infowindow = new google.maps.InfoWindow();
             for (i = 0; i < markers.length; i++) {  
               const icon = {

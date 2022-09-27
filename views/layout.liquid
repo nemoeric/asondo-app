@@ -59,12 +59,7 @@
       </style>
   </head>
   <body class="pt-[100px]">
-    <header class="fixed p-4 top-0 left-O w-full z-10 flex bg-green items-center">
-      <a href="/" class="flex aligns-center items-center">
-        <img class="h-[40px] mr-4" src="https://asondo.ci/wp-content/themes/asondo-theme/public/images/logo.png" alt="Asondo">
-        <img class="h-[20px]" src="https://asondo.ci/wp-content/uploads/2021/08/LOGO-TEXT-1.png" alt="">
-      </a>
-    </header>
+    {% include 'header.liquid' %}
 
     <div class="px-2">
       {% block body %}My body{% endblock %}

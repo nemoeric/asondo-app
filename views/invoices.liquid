@@ -1,26 +1,41 @@
 {% layout "layout.liquid" %}
 {% block body %}
-  <div class="md:w-[500px] mx-auto py-[200px]">
+  <div class="md:w-[500px] mx-auto py-[100px]">
     <div class="text-2xl">
-      FACTURES
+      CONTRATS
     </div> 
-    <div>
-      Accéder aux détails de chacune de vos factures
+    <div class="mb-6">
+      Pour chacun de vos contrats, accéder aux factures et à notre outil de tracibilité.
     </div>
-    <div class="grid grid-cols-2 gap-2 my-10">
-      {% for invoice in invoices %}
-        <a href="/trace?id={{ invoice.id }}">
-          <div class="border p-2 hover:bg-gray-50 hover:cursor-pointer">
-            <div class="text-lg">
-              {{ invoice.fields.Numero }}
-            </div>
-            <div class="flex justify-end">
-              <i class="fa-solid fa-angles-right"></i>
-            </div> 
-          </div>
-        </a>
-       
-      {% endfor %}
+    <div class="grid gap-2">
+      {%- for contrat in contracts -%}
+        <div class="p-2 border border-gray-300">
+          <h2 class="text-xl">
+            CONTRAT : {{ contrat.fields["Numéro contrat client"] }}
+          </h2>
+          <ul>
+            {% for facturation in contrat.fields.Facturation %}
+              {%- for one_invoice in invoices -%}
+                {% if one_invoice.id == facturation %}
+                  {%- assign invoice = one_invoice -%}
+                {% endif %}
+              {%- endfor -%}
+              <a href="/trace?id={{ invoice.id }}">
+                <div class="border p-2 my-2 hover:bg-gray-50 hover:cursor-pointer flex justify-between items-center">
+                  <div class="text-md">
+                    {{ invoice.fields.Numero }}
+                  </div>
+                  <div class="flex justify-end">
+                    <i class="fa-solid fa-angles-right"></i>
+                  </div> 
+                </div>
+              </a>
+            {% endfor %}
+          </ul>
+  
+        </div>
+      {%- endfor -%}
+
     </div>
   </div>
 {% endblock %}
