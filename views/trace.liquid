@@ -3,18 +3,21 @@
   <div class="sm:container">
     <div class="hover:text-orange hover:opacity-1/2">
       <a href="/invoices">
-        <i class="fa-solid fa-arrow-left"></i> Retour aux contrats
+        <i class="fa-solid fa-arrow-left"></i>
+        Retour aux contrats
       </a>
     </div>
 
     <div class="card text-center">
-      <div>Facture</div>
-      <h1 class="text-2xl">{{ facture.fields.Numero}} </h1>
+      <div>Fiche de traçabilité</div>
+      <h1 class="text-2xl">{{ facture.fields.Numero}}
+      </h1>
       <div>
-        Vous avez acheté {{ facture.fields["Quantité facturée"] }} tonnes
+        Quantité mise à quai : {{ facture.fields["Quantité mise à quai"] }} tonnes
       </div>
       <div>
-        Facturé le {{ facture.fields["Date"] }}
+        Facturées le
+        {{ facture.fields["Date"] }}
       </div>
 
     </div>
@@ -22,10 +25,12 @@
     <div class="py-4">
       <h1 class="text-xl">Informations</h1>
       <div>
-        Numero de contrat : {{ facture.fields["DEV_CONTRAT"] }}
+        Numero de contrat :
+        {{ facture.fields["DEV_CONTRAT"] }}
       </div>
       <div>
-        Bon de livraison :  {{ facture.fields["Numéro du B/L"] }}
+        Bill of lading :
+        {{ facture.fields["Numéro du B/L"] }}
       </div>
 
     </div>
@@ -33,7 +38,7 @@
     <div class="my-4 mt-10">
       <h2 class="text-xl">Provenance</h2>
       <div>
-        Tracabilités des lots présents sur votre facture.
+        Traçabilités des lots présents sur votre facture.
       </div>
     </div>
     <div class="grid grid-cols-1 gap-4">
@@ -52,39 +57,41 @@
                       <div class="grid md:grid-cols-2 gap-2">
                         <div data-camion class="p-2">
                           <div class="font-bold text-xl">
-                            Camion n°: {{camion.fields["Numéro de camion"]}}
+                            Camion n°:
+                            {{camion.fields["Numéro de camion"]}}
                           </div>
                           <div>
-                            Livré le {{ oneAchatBrousseDetail.fields.DATE }}
+                            Livré le
+                            {{ oneAchatBrousseDetail.fields.DATE }}
                           </div>
                           <div class="my-2 border p-1 text-md font-bold text-center">
-                            Quantité : {{ oneAchatBrousseDetail.fields["Quantité affectée au lot"] | kg }}
+                            Quantité :
+                            {{ oneAchatBrousseDetail.fields["Quantité affectée au lot"] | kg }}
                           </div>
                           <div>
-                            Code fournisseur : {{ camion.fields["Code fourniseur"] }}
+                            Code fournisseur :
+                            {{ camion.fields["Code coopérative"] }}
                           </div>
                           <div>
-                            Sigle fournisseur : {{ camion.fields["Sigle"] }}
+                            Sigle fournisseur :
+                            {{ camion.fields["Sigle"] }}
                           </div>
                           <div>
-                            Sous prefecture : {{ camion.fields["Sous préfecture"] }}
+                            Sous prefecture :
+                            {{ camion.fields["Sous préfecture"] }}
                           </div>
                           <div>
-                            Trajet : {{ camion.fields["Trajet"] }}
+                            Trajet :
+                            {{ camion.fields["Trajet"] }}
                           </div>
                         </div>
                         <div>
-                          <div 
-                              data-map id="lot{{lot.id}}-map{{forloop.index}}" 
-                              data-lat="{{ oneAchatBrousseDetail.fields.LATITUDE }}"
-                              data-lng="{{ oneAchatBrousseDetail.fields.LONGITUDE }}"
-                              style="height:400px">
+                          <div data-map id="lot{{lot.id}}-map{{forloop.index}}" data-lat="{{ oneAchatBrousseDetail.fields.LATITUDE }}" data-lng="{{ oneAchatBrousseDetail.fields.LONGITUDE }}" style="height:400px">
                             maps
                           </div>
                         </div>
-    
+
                       </div>
-                      
                     {%- endif -%}
                   {%- endfor -%}
                 {% endif %}
@@ -94,106 +101,104 @@
         </div>
       {% endfor %}
     </div>
-    <ul>
-
-    </ul>
+    <ul></ul>
     <div class="my-6">
 
       <script>
 
         function myMap() {
-          const ivoryCoast = { lat: 7.539989, lng: -5.547080 };
+          const ivoryCoast = {
+            lat: 7.539989,
+            lng: -5.547080
+          };
           const stylesArray = [
             {
-                "featureType": "all",
-                "elementType": "labels.text",
-                "stylers": [
-                    {
-                        "color": "#878787"
-                    }
-                ]
+              "featureType": "all",
+              "elementType": "labels.text",
+              "stylers": [
+                {
+                  "color": "#878787"
+                }
+              ]
             },
             {
-                "featureType": "all",
-                "elementType": "labels.text.stroke",
-                "stylers": [
-                    {
-                        "visibility": "off"
-                    }
-                ]
+              "featureType": "all",
+              "elementType": "labels.text.stroke",
+              "stylers": [
+                {
+                  "visibility": "off"
+                }
+              ]
             },
             {
-                "featureType": "landscape",
-                "elementType": "all",
-                "stylers": [
-                    {
-                        "color": "#f9f5ed"
-                    }
-                ]
+              "featureType": "landscape",
+              "elementType": "all",
+              "stylers": [
+                {
+                  "color": "#f9f5ed"
+                }
+              ]
             },
             {
-                "featureType": "road.highway",
-                "elementType": "all",
-                "stylers": [
-                    {
-                        "color": "#f5f5f5"
-                    }
-                ]
-            },
-            {
-                "featureType": "road.highway",
-                "elementType": "geometry.stroke",
-                "stylers": [
-                    {
-                        "color": "#c9c9c9"
-                    }
-                ]
-            },
-            {
-                "featureType": "water",
-                "elementType": "all",
-                "stylers": [
-                    {
-                        "color": "#aee0f4"
-                    }
-                ]
+              "featureType": "road.highway",
+              "elementType": "all",
+              "stylers": [
+                {
+                  "color": "#f5f5f5"
+                }
+              ]
+            }, {
+              "featureType": "road.highway",
+              "elementType": "geometry.stroke",
+              "stylers": [
+                {
+                  "color": "#c9c9c9"
+                }
+              ]
+            }, {
+              "featureType": "water",
+              "elementType": "all",
+              "stylers": [
+                {
+                  "color": "#aee0f4"
+                }
+              ]
             }
-        ]
-          const mapProp= {
+          ]
+          const mapProp = {
             center: ivoryCoast,
             zoom: 6,
-            styles : stylesArray,
-            // mapTypeId: 'satellite'
+            styles: stylesArray,
+
+// mapTypeId: 'satellite'
           };
 
           var mapElements = document.querySelectorAll('[data-map]')
-          mapElements.forEach(function(element, index){
-            let map = new google.maps.Map( document.getElementById(element.id), mapProp);
+          mapElements.forEach(function(element, index) {
+            let map = new google.maps.Map(document.getElementById(element.id), mapProp);
             let lat = parseFloat(element.getAttribute('data-lat'))
             let lng = parseFloat(element.getAttribute('data-lng'))
 
-            // MARKERS
-            var markers = [
-              { lat, lng }
-            ]
-            
+// MARKERS
+            var markers = [{
+                lat,
+                lng
+              }]
+
             console.log("markers", markers);
 
             var infowindow = new google.maps.InfoWindow();
-            for (i = 0; i < markers.length; i++) {  
+            for (i = 0; i < markers.length; i ++) {
               const icon = {
-                  url: "/public/marker.png",
-                  // size: new google.maps.Size(30, 30),
-                  scaledSize: new google.maps.Size(30, 30),
-                  // origin: new google.maps.Point(0,0), // origin
-                  // anchor: new google.maps.Point(0, 0) // anchor
+                url: "/public/marker.png",
+
+// size: new google.maps.Size(30, 30),
+                scaledSize: new google.maps.Size(30, 30),
+
+// origin: new google.maps.Point(0,0), // origin
+// anchor: new google.maps.Point(0, 0) // anchor
               };
-              let marker = new google.maps.Marker({
-                position: markers[i],
-                icon,
-                optimized: false,
-                map
-              });
+              let marker = new google.maps.Marker({position: markers[i], icon, optimized: false, map});
               google.maps.event.addListener(marker, 'click', (function(marker, i) {
                 return function() {
                   infowindow.setContent("COUCOU");
@@ -205,8 +210,6 @@
           console.log("mapElements", mapElements);
 
         }
-
-        
       </script>
       <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAUM_6UzxXsIGGSQh1MzU4aqKqVvxiX3_4&callback=myMap"></script>
 

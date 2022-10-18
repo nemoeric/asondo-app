@@ -23,7 +23,8 @@ app.engine('liquid', engine.express());
 app.set('views', './views');            // specify the views directory
 app.set('view engine', 'liquid');       // set liquid to default
 app.use("/public", express.static(path.join(__dirname, 'public')));
-const authMiddleWare = require('./middlewares/auth')
+const authMiddleWare = require('./middlewares/auth');
+const { log } = require('console');
 
 
 app.post('/login',
@@ -68,7 +69,7 @@ app.post('/trace',
 			filterByFormula: `Numero = '${req.body.number}' `
 		}).all()
 
-		console.log("ICI", factures);
+		console.log("ICI", factures.id);
 		
 		if(factures.length){
 			return res.redirect(`/trace?id=${factures[0].id}`)
@@ -97,35 +98,33 @@ app.get('/trace',
 
 
 
-		let camionIds = []
 		let achatBrousseDetailIds = []
 		for(lot of lotRecors){
-			// console.log("Sur le lot", lot);
-			for(camion_id of lot.fields["Achats brousse"]){
-				camionIds.push(camion_id)
-			}
 			for(achat_brousse_id of lot.fields["Achats brousse détail"]){
 				achatBrousseDetailIds.push(achat_brousse_id)
 			}
 
 		}
-		camionIds = [...new Set(camionIds)];
-		let camions = [];
+		let camionIds = []
 		let achatBrousseDetails = []
-		for(camionId of camionIds){
-			let camion = await req.executionLogistique("Achats brousse").find(camionId)
-			camions.push(camion)
-		}
 		for(achat_detail_id of achatBrousseDetailIds){
 			let one = await req.executionLogistique("Achats brousse").find(achat_detail_id)
 			achatBrousseDetails.push(one)
+			camionIds.push(one.fields["Achats brousse"][0])
+		}
+		camionIds = [...new Set(camionIds)];
+
+
+		let camions = [];
+		for(let camionId of camionIds){
+			let camion = await req.executionLogistique("Achats brousse").find(camionId)
+			camions.push(camion)
 		}
 
-		// SUR LE LOT, j'ai le "Poids net" 
-		// la sommes des achats brousses détails = le poid net
 
 		if(req.query.json){
 			return res.json({
+				camionIds,
 				lots: lotRecors,
 				facture,
 				camions,

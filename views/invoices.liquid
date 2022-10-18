@@ -3,15 +3,16 @@
   <div class="md:w-[500px] mx-auto py-[100px]">
     <div class="text-2xl">
       CONTRATS
-    </div> 
+    </div>
     <div class="mb-6">
-      Pour chacun de vos contrats, accéder aux factures et à notre outil de tracibilité.
+      Pour chacun de vos contrats, accéder aux Fiches de traçabilité et à notre outil de tracibilité.
     </div>
     <div class="grid gap-2">
       {%- for contrat in contracts -%}
         <div class="p-2 border border-gray-300">
           <h2 class="text-xl">
-            CONTRAT : {{ contrat.fields["Numéro contrat client"] }}
+            CONTRAT :
+            {{ contrat.fields["Numéro contrat client"] }}
           </h2>
           <ul>
             {% for facturation in contrat.fields.Facturation %}
@@ -27,12 +28,12 @@
                   </div>
                   <div class="flex justify-end">
                     <i class="fa-solid fa-angles-right"></i>
-                  </div> 
+                  </div>
                 </div>
               </a>
             {% endfor %}
           </ul>
-  
+
         </div>
       {%- endfor -%}
 
